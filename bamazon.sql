@@ -23,3 +23,19 @@ VALUES
     ("nightstand", "furniture", 100.00, 30),
     ("mattress", "furniture", 399.95, 100),
     ("'How to Win Friends and Influence People' - Dale Carnegie", "books", 15.00, 1000);
+
+CREATE TABLE departments (
+    department_id INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (department_id),
+    department_name VARCHAR(50) NOT NULL UNIQUE,
+    over_head_costs DECIMAL(10,2) NOT NULL
+);
+
+INSERT INTO departments (department_name, over_head_costs)
+VALUES 
+	("electronics", 45000),
+    ("books", 10000),
+    ("furniture", 72500);
+
+ALTER TABLE products
+ADD COLUMN product_sales DECIMAL(10,2) NOT NULL;

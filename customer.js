@@ -1,8 +1,10 @@
 var inquirer = require("inquirer");
 var database = require("./database");
 
+var role = "customer";
+
 function runCustomerView() {
-    database.viewAllItems(promptCustomerPurchase);
+    database.viewAllItems(role, promptCustomerPurchase);
 }
 
 function promptCustomerPurchase(products) {
@@ -44,12 +46,12 @@ function promptCustomerPurchase(products) {
         } else {
             var totalCost = (itemToPurchase.price * userInput.quantity).toFixed(2);
             console.log(`\nYour total for ${userInput.quantity} ${itemToPurchase.product_name} is $${totalCost}.\n`)
-            confirmOrder(itemToPurchase.stock_quantity, userInput.quantity, itemToPurchase.item_id);
+            confirmOrder(totalCost, itemToPurchase.stock_quantity, userInput.quantity, itemToPurchase.item_id);
         }
     })
 }
 
-function confirmOrder(stockQuantity, purchaseQuantity, itemId) {
+function confirmOrder(totalCost, stockQuantity, purchaseQuantity, itemId) {
     inquirer.prompt([
         {
             name: "confirmPurchase",
@@ -59,6 +61,7 @@ function confirmOrder(stockQuantity, purchaseQuantity, itemId) {
     ]).then(function(userInput) {
         if (userInput.confirmPurchase) {
             var newQuantity = stockQuantity - purchaseQuantity;
+            database.updateProductSales(totalCost, itemId);
             database.updateProductQuantity(newQuantity, itemId, "Your order has been completed.", purchaseAgain);
         } else {
             console.log("\nYour order has been canceled.\n");

@@ -2,6 +2,7 @@ var inquirer = require("inquirer");
 
 var runCustomerView = require("./customer");
 var runManagerView = require("./manager");
+var runSupervisorView = require("./supervisor");
 
 function mainMenu() {
     console.log("\nWelcome to Bamazon!\n");
@@ -19,7 +20,7 @@ function mainMenu() {
         } else if (userType === "Manager") {
             runManagerView();
         } else if (userType === "Supervisor") {
-
+            runSupervisorView();
         }
     })
 }

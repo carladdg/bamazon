@@ -1,6 +1,8 @@
 var inquirer = require("inquirer");
 var database = require("./database");
 
+var role = "manager";
+
 function runManagerView() {
     inquirer.prompt([
         {
@@ -12,14 +14,15 @@ function runManagerView() {
     ]).then(function(userInput) {
         var managerAction = userInput.managerAction;
         if (managerAction === "View Products for Sale") {
-            database.viewAllItems(runManagerView);
+            database.viewAllItems(role, runManagerView);
         } else if (managerAction === "View Low Inventory") {
             database.viewLowInventory(runManagerView);
         } else if (managerAction === "Add to Inventory") {
-            database.viewAllItems(promptManagerInventory);
+            database.viewAllItems(role, promptManagerInventory);
         } else if (managerAction === "Add New Product") {
             promptManagerProduct();
         } else if (managerAction === "Quit") {
+            console.log("\nThanks for using Bamazon!");
             database.connection.end();
         }
     })
