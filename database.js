@@ -72,7 +72,7 @@ function addItem(productName, departmentName, price, stockQuantity, action) {
 function viewProductSales(action) {
     connection.query("SELECT d.department_id, d.department_name, d.over_head_costs, SUM(p.product_sales) AS product_sales, (SUM(p.product_sales) - d.over_head_costs) AS total_profit FROM departments d LEFT JOIN products p ON d.department_name = p.department_name GROUP BY d.department_id, d.department_name, d.over_head_costs;", function(error, response) {
         if (error) throw error;
-        console.log("\nProduct Sales");
+        console.log("\nProduct Sales\n");
         console.table(response);
         action();
     })
